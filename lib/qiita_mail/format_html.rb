@@ -37,7 +37,7 @@ EOF
       HEADER + @items.map {|item|
         <<EOF
 <hr>
-<div id="title" style="font-size: 28px;"><a href="#{item.url}" style="color:#2C6EBD; text-decoration:none;">#{item.title}</a></div>
+<div id="title" style="font-size: 28px;"><img src="#{item.user.profile_image_url}" style="margin-right: 5px; width: 72px;"/><a href="#{item.url}" style="color:#2C6EBD; text-decoration:none;">#{item.title}</a></div>
 <div id="summary">#{item.body[0..200]}</div>
 <div id="footer">ストック(#{item.stock_count}) コメント(#{item.comment_count}) #{item.created_at_in_words}</div>
 EOF
