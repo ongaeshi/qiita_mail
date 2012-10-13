@@ -20,7 +20,7 @@ module QiitaMail
     desc "deliver", "Deliver mail."
     def deliver(token)
       selector = Selector.new(token)
-      pickup_items = selector.pickup
+      pickup_items = selector.pickup(5)
 
       puts FormatText.new(pickup_items).to_s
     end

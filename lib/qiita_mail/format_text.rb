@@ -7,6 +7,7 @@
 
 require 'rubygems'
 require 'qiita'
+require 'pp'
 
 module QiitaMail
   class FormatText
@@ -17,8 +18,10 @@ module QiitaMail
     def to_s
       @items.map {|item|
         <<EOF
-Title: #{item.title}
-URL:   #{item.url}
+Title:      #{item.title}
+URL:        #{item.url}
+作成時刻:   #{item.created_at_in_words}
+ストック数: #{item.stock_count}
 EOF
       }.join("\n")
     end

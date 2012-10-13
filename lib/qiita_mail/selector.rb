@@ -20,7 +20,7 @@ module QiitaMail
       #   puts item.url
       #   puts item.stock
       # end
-      Qiita.tag_items('ruby')[0..num]
+      Qiita.tag_items('ruby')[0..num-1]
     end
   end
 end
