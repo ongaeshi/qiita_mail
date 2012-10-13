@@ -21,7 +21,7 @@ module QiitaMail
 
     desc "deliver", "Deliver mail."
     def deliver(token)
-      puts "Pickup from qiita ..."
+      puts "Pickup from Qiita.com ..."
 
       # 記事をピックアップ
       selector = Selector.new(token)
@@ -32,26 +32,14 @@ module QiitaMail
 
       puts "Send mail ..."
 
-      # メールを送信
-      Mail.defaults do
-        delivery_method :smtp, {
-          :address =>  'smtp.gmail.com',
-          :port =>      587,
-          :domain =>    'gmail',
-          :user_name => 'username',
-          # password =>  ($stderr.print 'password> '; gets.chomp) }
-          :password =>  'password'
-        }
-      end
-
       mail = Mail.new do
         to      'ongaeshi0621@gmail.com'
-        from    'ongaeshi0621@gmail.com'
         subject 'Qiita Mail'
         body    mail_body
       end
 
       mail.charset = 'utf-8'
+      mail.delivery_method :sendmail
       mail.deliver
     end
   end
