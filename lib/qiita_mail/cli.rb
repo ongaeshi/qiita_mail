@@ -10,9 +10,14 @@ require 'thor'
 
 module QiitaMail
   class CLI < Thor
-    desc "red WORD", "red words print."
-    def red(word)
-      say(word, :red)
+    desc "init", "Init setting."
+    def init
+      p 'Init setting'
+    end
+
+    desc "deliver", "Deliver mail."
+    def deliver
+      p 'deliver!!'
     end
   end
 end
