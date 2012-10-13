@@ -30,9 +30,11 @@ module QiitaMail
       # テキスト整形
       mail_body =  FormatHTML.new(pickup_items).to_s
 
+      # puts mail_body
+
       # メールの送信
       puts "Send mail ..."
-      mailer = Mailer.new('ongaeshi0621@gmail.com', '<pre>' + mail_body + '</pre>')
+      mailer = Mailer.new('ongaeshi0621@gmail.com', mail_body)
       mailer.deliver
     end
   end
