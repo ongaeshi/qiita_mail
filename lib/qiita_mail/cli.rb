@@ -7,6 +7,7 @@
 
 require 'qiita_mail'
 require 'thor'
+require 'qiita_mail/selector'
 
 module QiitaMail
   class CLI < Thor
@@ -16,8 +17,9 @@ module QiitaMail
     end
 
     desc "deliver", "Deliver mail."
-    def deliver
-      p 'deliver!!'
+    def deliver(token)
+      selector = Selector.new(token)
+      selector.pickup
     end
   end
 end
