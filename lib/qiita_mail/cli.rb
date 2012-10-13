@@ -8,6 +8,7 @@
 require 'qiita_mail'
 require 'thor'
 require 'qiita_mail/selector'
+require 'qiita_mail/format_text'
 
 module QiitaMail
   class CLI < Thor
@@ -21,10 +22,7 @@ module QiitaMail
       selector = Selector.new(token)
       pickup_items = selector.pickup
 
-      pickup_items.each do |item|
-        puts item.title
-        puts item.url
-      end
+      puts FormatText.new(pickup_items).to_s
     end
   end
 end
