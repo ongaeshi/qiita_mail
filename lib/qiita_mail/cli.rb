@@ -9,7 +9,8 @@ require 'rubygems'
 require 'qiita_mail'
 require 'thor'
 require 'qiita_mail/selector'
-require 'qiita_mail/format_text'
+# require 'qiita_mail/format_text'
+require 'qiita_mail/format_html'
 require 'qiita_mail/mailer'
 
 module QiitaMail
@@ -20,14 +21,14 @@ module QiitaMail
     end
 
     desc "deliver", "Deliver mail."
-    def deliver(token)
+    def deliver
       # 記事をピックアップ
       puts "Pickup from Qiita.com ..."
-      selector = Selector.new(token)
+      selector = Selector.new("")
       pickup_items = selector.pickup(5)
 
       # テキスト整形
-      mail_body =  FormatText.new(pickup_items).to_s
+      mail_body =  FormatHTML.new(pickup_items).to_s
 
       # メールの送信
       puts "Send mail ..."
