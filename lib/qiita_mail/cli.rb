@@ -10,7 +10,7 @@ require 'qiita_mail'
 require 'thor'
 require 'qiita_mail/selector'
 require 'qiita_mail/format_text'
-require 'mail'
+require 'qiita_mail/mailer'
 
 module QiitaMail
   class CLI < Thor
@@ -21,34 +21,18 @@ module QiitaMail
 
     desc "deliver", "Deliver mail."
     def deliver(token)
-      puts "Pickup from Qiita.com ..."
-
       # 記事をピックアップ
+      puts "Pickup from Qiita.com ..."
       selector = Selector.new(token)
       pickup_items = selector.pickup(5)
 
-      # 送信するテキスト
+      # テキスト整形
       mail_body =  FormatText.new(pickup_items).to_s
 
+      # メールの送信
       puts "Send mail ..."
-
-      # MailText.new('ongaeshi0621@gmail.com', 'Qiita Mail', )
-
-      mail = Mail.new do
-        to      'ongaeshi0621@gmail.com'
-        subject 'Qiita Mail'
-        # body    mail_body
-      end
-
-      mail.charset = 'utf-8'
-
-      mail.html_part = Mail::Part.new {
-        content_type 'text/html; charset=UTF-8'
-        body mail_body
-      }
-
-      mail.delivery_method :sendmail
-      mail.deliver
+      mailer = Mailer.new('ongaeshi0621@gmail.com', '<pre>' + mail_body + '</pre>')
+      mailer.deliver
     end
   end
 end
