@@ -19,7 +19,12 @@ module QiitaMail
     desc "deliver", "Deliver mail."
     def deliver(token)
       selector = Selector.new(token)
-      selector.pickup
+      pickup_items = selector.pickup
+
+      pickup_items.each do |item|
+        puts item.title
+        puts item.url
+      end
     end
   end
 end
