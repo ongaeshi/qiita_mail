@@ -32,13 +32,21 @@ module QiitaMail
 
       puts "Send mail ..."
 
+      # MailText.new('ongaeshi0621@gmail.com', 'Qiita Mail', )
+
       mail = Mail.new do
         to      'ongaeshi0621@gmail.com'
         subject 'Qiita Mail'
-        body    mail_body
+        # body    mail_body
       end
 
       mail.charset = 'utf-8'
+
+      mail.html_part = Mail::Part.new {
+        content_type 'text/html; charset=UTF-8'
+        body mail_body
+      }
+
       mail.delivery_method :sendmail
       mail.deliver
     end
