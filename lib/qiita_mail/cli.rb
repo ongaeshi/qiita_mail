@@ -17,7 +17,7 @@ module QiitaMail
   class CLI < Thor
     desc "init", "Init setting."
     def init
-      p 'Init setting'
+      puts "Create 'qiita_mail.yml'"
     end
 
     desc "deliver", "Deliver mail."
