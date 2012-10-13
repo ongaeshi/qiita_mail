@@ -14,13 +14,20 @@ module QiitaMail
       @token = token
     end
 
+    TAGS = ['ruby', 'javascript']
+
     def pickup(num = 5)
-      # Qiita.tag_items('ruby').each do |item|
-      #   puts item.title
-      #   puts item.url
-      #   puts item.stock
-      # end
-      Qiita.tag_items('ruby')[0..num-1]
+      items = []
+
+      TAGS.each do |tag|
+          items += Qiita.tag_items(tag)
+      end
+
+      items = items.sort { |a, b|
+        a.stock_count <=> b.stock_count
+      }.reverse
+
+      items[0..num-1]
     end
   end
 end
