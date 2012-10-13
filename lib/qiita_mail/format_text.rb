@@ -18,10 +18,9 @@ module QiitaMail
     def to_s
       @items.map {|item|
         <<EOF
-Title:      #{item.title}
-URL:        #{item.url}
-作成時刻:   #{item.created_at_in_words}
-ストック数: #{item.stock_count}
+#{item.title}
+#{item.url}
+ストック(#{item.stock_count}) コメント(#{item.comment_count}) #{item.created_at_in_words}
 EOF
       }.join("\n")
     end
