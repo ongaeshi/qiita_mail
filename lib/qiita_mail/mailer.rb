@@ -22,7 +22,6 @@ module QiitaMail
       @mail.html_part = Mail::Part.new {
         content_type 'text/html; charset=UTF-8'
         body body
-        # body '<h1>fdafdaskfda</h1>'
       }
 
       @mail.delivery_method :sendmail

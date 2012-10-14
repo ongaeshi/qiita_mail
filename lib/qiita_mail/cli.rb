@@ -22,20 +22,37 @@ module QiitaMail
 
     desc "deliver", "Deliver mail."
     def deliver
+      # ピックアップ
+      mail_body = pickup_and_format
+      
+      # メールの送信
+      puts "Send mail ..."
+      mailer = Mailer.new('tuto0621@gmail.com', mail_body)
+      mailer.deliver
+    end
+
+    desc "file", "Write file."
+    def file(filename)
+      # ピックアップ
+      mail_body = pickup_and_format
+      
+      # ファイルに書き込み
+      puts "Write file -> #{filename}"
+      open(filename, "w") do |f|
+        f.write mail_body
+      end
+    end
+
+    private
+
+    def pickup_and_format
       # 記事をピックアップ
       puts "Pickup from Qiita.com ..."
       selector = Selector.new("")
       pickup_items = selector.pickup(5)
 
       # テキスト整形
-      mail_body =  FormatHTML.new(pickup_items).to_s
-
-      # puts mail_body
-
-      # メールの送信
-      puts "Send mail ..."
-      mailer = Mailer.new('ongaeshi0621@gmail.com', mail_body)
-      mailer.deliver
+      FormatHTML.new(pickup_items).to_s
     end
   end
 end
