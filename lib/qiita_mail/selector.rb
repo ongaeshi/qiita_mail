@@ -13,28 +13,46 @@ module QiitaMail
   CACHE_FILE = File.join(File.dirname(__FILE__), '../../test/data/pickup_cache.marshal')
 
   class Selector
-    def initialize(token)
+    # デバッグ用
+    USE_CACHE = 0
+    
+    def initialize(token, storage)
       @token = token
+      @storage = storage
     end
 
-    TAGS = ['ruby', 'javascript']
+    TAGS = ['ruby', 'javascript', 'emacs']
 
     def pickup(num = 5)
-      # 本番用ピックアップ
-      items = pickup_items
-      # キャッシュを保存
-      # MarshalFile.save(CACHE_FILE, items)
-      # キャッシュからロード(高速)
-      # items = MarshalFile.load(CACHE_FILE)
+      # 候補記事をピックアップ
+      items = pickup_in
 
+      # 既読記事は除外
+      items.delete_if do |item|
+        @storage.reading? item.uuid
+      end
+
+      # ソート
       items = items.sort { |a, b|
         a.stock_count <=> b.stock_count
       }.reverse
 
+      # 優先の高い物をピックアップ
       items[0..num-1]
     end
 
     private
+
+    def pickup_in
+      unless USE_CACHE
+        items = pickup_items
+        # キャッシュを保存
+        # MarshalFile.save(CACHE_FILE, items)
+      else
+        # キャッシュからロード(高速)
+        items = MarshalFile.load(CACHE_FILE)
+      end
+    end
 
     def pickup_items
       items = []
@@ -45,6 +63,7 @@ module QiitaMail
 
       items
     end
+    
   end
 end
 

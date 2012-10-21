@@ -12,6 +12,7 @@ require 'qiita_mail/selector'
 require 'qiita_mail/format_text'
 require 'qiita_mail/format_html'
 require 'qiita_mail/mailer'
+require 'qiita_mail/storage'
 
 module QiitaMail
   class CLI < Thor
@@ -57,10 +58,19 @@ module QiitaMail
     private
 
     def pickup_and_format(kind)
+      # ストレージを作成
+      storage = Storage.new
+      
       # 記事をピックアップ
-      selector = Selector.new("")
+      selector = Selector.new("", storage)
       pickup_items = selector.pickup(5)
 
+      # ピックアップした記事をストレージに記録
+      pickup_items.each do |item|
+        storage.add_reading(item.uuid)
+      end
+      storage.save
+      
       # テキスト整形
       case kind
       when :html
