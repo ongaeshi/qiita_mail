@@ -29,7 +29,7 @@ module QiitaMail
       
       # メールの送信
       puts "Send mail ..."
-      mailer = Mailer.new('tuto0621@gmail.com', mail_body)
+      mailer = Mailer.new('xxxx@xxxx.com', mail_body)
       mailer.deliver
     end
 
