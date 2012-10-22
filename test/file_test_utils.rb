@@ -37,6 +37,10 @@ module FileTestUtils
     FileUtils.rm_rf(@tmp_dir) if (is_remove_dir)
   end
 
+  def tmp_path(path)
+    File.join @tmp_dir, path
+  end
+
   private
 
   def create_tmp_dir
