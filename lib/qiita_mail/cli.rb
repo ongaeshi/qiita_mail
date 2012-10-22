@@ -6,63 +6,29 @@
 # @date   2012/10/12
 
 require 'rubygems'
-require 'qiita_mail'
 require 'thor'
-require 'qiita_mail/selector'
-require 'qiita_mail/format_text'
-require 'qiita_mail/format_html'
-require 'qiita_mail/mailer'
-require 'qiita_mail/storage'
-require 'qiita_mail/settings'
+require 'qiita_mail/cli_core'
 
 module QiitaMail
   class CLI < Thor
     desc "init", "Init setting."
     def init
-      settings = Settings.new
-
-      if (settings.empty?)
-        settings.save
-        puts "Create -> #{Settings.default_filename}"
-        puts "Please edit YAML settings!"
-      else
-        puts "Already exists '#{Settings.default_filename}'."
-        puts "Please edit YAML settings!"
-      end
+      CliCore.new.init
     end
 
     desc "deliver", "Deliver mail."
     def deliver
-      # ピックアップ
-      puts "Pickup from Qiita.com ..."
-      mail_body = pickup_and_format(:html)
-      
-      # メールの送信
-      puts "Send mail ..."
-      mailer = Mailer.new('xxxx@xxxx.com', mail_body)
-      mailer.deliver
+      CliCore.new.deliver
     end
 
     desc "html [filename]", "Write html."
     def html(filename = nil)
-      # ピックアップ
-      puts "Pickup from Qiita.com ..."
-      mail_body = pickup_and_format(:html)
-      
-      # ファイルに書き込み
-      puts "Write html -> #{filename}"
-      write_or_puts(filename, mail_body)
+      CliCore.new.file(:html, filename)
     end
 
     desc "text [filename]", "Write text format."
     def text(filename = nil)
-      # ピックアップ
-      puts "Pickup from Qiita.com ..."
-      mail_body = pickup_and_format(:text)
-      
-      # 標準出力に出力
-      puts "Write text -> #{filename}"
-      write_or_puts(filename, mail_body)
+      CliCore.new.file(:text, filename)
     end
 
     private
