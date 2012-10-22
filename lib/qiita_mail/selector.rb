@@ -13,7 +13,7 @@ module QiitaMail
   CACHE_FILE = File.join(File.dirname(__FILE__), '../../test/data/pickup_cache.marshal')
 
   class Selector
-    # デバッグ用
+    # デバッグ用のキャッシュからデータをロードする(高速)
     USE_CACHE = 0
     
     def initialize(token, storage)
@@ -49,7 +49,6 @@ module QiitaMail
         # キャッシュを保存
         # MarshalFile.save(CACHE_FILE, items)
       else
-        # キャッシュからロード(高速)
         items = MarshalFile.load(CACHE_FILE)
       end
     end
