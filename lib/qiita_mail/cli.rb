@@ -13,12 +13,22 @@ require 'qiita_mail/format_text'
 require 'qiita_mail/format_html'
 require 'qiita_mail/mailer'
 require 'qiita_mail/storage'
+require 'qiita_mail/settings'
 
 module QiitaMail
   class CLI < Thor
     desc "init", "Init setting."
     def init
-      puts "Create 'qiita_mail.yml'"
+      settings = Settings.new
+
+      if (settings.empty?)
+        settings.save
+        puts "Create -> #{Settings.default_filename}"
+        puts "Please edit YAML settings!"
+      else
+        puts "Already exists '#{Settings.default_filename}'."
+        puts "Please edit YAML settings!"
+      end
     end
 
     desc "deliver", "Deliver mail."
