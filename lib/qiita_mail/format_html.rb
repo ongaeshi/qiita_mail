@@ -42,7 +42,7 @@ EOF
         <<EOF
 <hr>
 <div id="title" style="font-size: 28px;"><img src="#{item.user.profile_image_url}" style="margin-right: 5px; width: 72px;"/><a href="#{item.url}" style="color:#2C6EBD; text-decoration:none;">#{item.title}</a></div>
-<div id="summary">#{summary} <a href="#{item.url}">続きを読む</a> </div>
+<div id="summary" style="background-color:#FCFCFC; border-style: solid; border-width: 1px; border-color: #DDDDDD; margin: 10px 5px; padding: 10px;">#{summary} <a href="#{item.url}">続きを読む</a> </div>
 <div id="footer">ストック(#{item.stock_count}) コメント(#{item.comment_count}) #{item.created_at_in_words}</div>
 EOF
       }.join("\n") + FOOTER
