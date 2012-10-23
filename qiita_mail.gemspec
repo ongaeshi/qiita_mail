@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'thor'
   s.add_dependency 'qiita'
   s.add_dependency 'mail'
+  s.add_dependency 'nokogiri'
 end

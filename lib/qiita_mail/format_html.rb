@@ -7,7 +7,7 @@
 
 require 'rubygems'
 require 'qiita'
-require 'pp'
+require 'nokogiri'
 
 module QiitaMail
   class FormatHTML
@@ -35,10 +35,14 @@ EOF
    
     def to_s
       HEADER + @items.map {|item|
+        summary = Nokogiri::HTML(item.body).inner_text
+        summary = summary[0..200] + '...' if summary.length > 200
+        summary = summary.gsub("\n", "<br>")
+
         <<EOF
 <hr>
 <div id="title" style="font-size: 28px;"><img src="#{item.user.profile_image_url}" style="margin-right: 5px; width: 72px;"/><a href="#{item.url}" style="color:#2C6EBD; text-decoration:none;">#{item.title}</a></div>
-<div id="summary">#{item.body[0..200]}</div>
+<div id="summary">#{summary} <a href="#{item.url}">続きを読む</a> </div>
 <div id="footer">ストック(#{item.stock_count}) コメント(#{item.comment_count}) #{item.created_at_in_words}</div>
 EOF
       }.join("\n") + FOOTER
