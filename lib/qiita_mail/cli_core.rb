@@ -16,6 +16,7 @@ module QiitaMail
   class CliCore
     def initialize
       @settings = Settings.new
+      @storage  = Storage.new
     end
 
     def init
@@ -53,18 +54,15 @@ module QiitaMail
     private
 
     def pickup_and_format(kind)
-      # ストレージを作成
-      storage = Storage.new
-      
       # 記事をピックアップ
-      selector = Selector.new("", storage)
+      selector = Selector.new(@settings, @storage)
       pickup_items = selector.pickup(5)
 
       # ピックアップした記事をストレージに記録
       pickup_items.each do |item|
-        storage.add_reading(item.uuid)
+        @storage.add_reading(item.uuid)
       end
-      storage.save
+      @storage.save
       
       # テキスト整形
       case kind

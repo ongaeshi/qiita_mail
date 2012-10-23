@@ -14,14 +14,12 @@ module QiitaMail
 
   class Selector
     # デバッグ用のキャッシュからデータをロードする(高速)
-    USE_CACHE = 0
+    USE_CACHE = false
     
-    def initialize(token, storage)
-      @token = token
-      @storage = storage
+    def initialize(settings, storage)
+      @settings = settings
+      @storage  = storage
     end
-
-    TAGS = ['ruby', 'javascript', 'emacs']
 
     def pickup(num = 5)
       # 候補記事をピックアップ
@@ -48,6 +46,7 @@ module QiitaMail
         items = pickup_items
         # キャッシュを保存
         # MarshalFile.save(CACHE_FILE, items)
+        # items
       else
         items = MarshalFile.load(CACHE_FILE)
       end
@@ -56,7 +55,7 @@ module QiitaMail
     def pickup_items
       items = []
 
-      TAGS.each do |tag|
+      @settings.keywords.each do |tag|
         items += Qiita.tag_items(tag)
       end
 
