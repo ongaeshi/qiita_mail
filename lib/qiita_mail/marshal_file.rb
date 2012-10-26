@@ -13,14 +13,14 @@ module QiitaMail
     module_function
 
     def save(filename, obj)
-      puts "MarshalFile#save -> #{filename}"
+      # puts "MarshalFile#save -> #{filename}"
       open(filename, "w") do |f|
         f.write Marshal.dump(obj)
       end
     end
 
     def load(filename)
-      puts "MarshalFile#load <- #{filename}"
+      # puts "MarshalFile#load <- #{filename}"
       open(filename) do |f|
         Marshal.load(f.read)
       end

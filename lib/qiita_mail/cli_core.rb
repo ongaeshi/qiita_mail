@@ -32,22 +32,22 @@ module QiitaMail
 
     def deliver
       # ピックアップ
-      puts "Pickup from Qiita.com ..."
+      puts "Pickup <---- Qiita.com"
       mail_body = pickup_and_format(:html)
       
       # メールの送信
-      puts "Send mail ... #{@settings.email}"
+      puts "Send mail -> #{@settings.email}"
       mailer = Mailer.new(@settings.email, mail_body)
       mailer.deliver
     end
 
     def file(format, filename = nil)
       # ピックアップ
-      puts "Pickup from Qiita.com ..."
+      puts "Pickup  <------ Qiita.com"
       mail_body = pickup_and_format(format)
       
       # ファイルに書き込み
-      puts "Write #{format.to_s} -> #{filename}"
+      puts "Write '#{format.to_s}' -> #{filename}"
       write_or_puts(filename, mail_body)
     end
 
