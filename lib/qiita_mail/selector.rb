@@ -42,19 +42,16 @@ module QiitaMail
         end
       end
 
-      # ScoredItemに変換
-      container = container.map {|items| items.map {|item| ScoredItem.new item} }
-
-      # スコアでソート
-      container = container.map {|items| items.sort.reverse}
+      # ScoredItemに変換、スコア順にソート
+      container = container.map {|items| items.map {|item| ScoredItem.new item}.sort.reverse }
 
       # ボーナス加算
       container.each do |items|
         items[0].add_score(TOP_BONUS) unless items.empty?
       end
 
-      # 合算して、スコア順にソート
-      results = container.reduce([]) {|r,i| r += i}.sort.reverse
+      # 合算して、重複は削除、スコア順にソート
+      results = container.reduce([]) {|r,i| r += i}.uniq{|i| i.item.uuid}.sort.reverse
 
       # スコアの高い物をピックアップ、Itemに戻して返す
       results[0..num-1].map {|scored_item| scored_item.item}
