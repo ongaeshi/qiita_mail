@@ -17,6 +17,7 @@ module QiitaMail
     # パラメータ
 
     TOP_BONUS = 30
+    PER_PAGE  = 50
 
     # -----------------------
 
@@ -31,6 +32,8 @@ module QiitaMail
     def pickup(num = 5)
       # 候補記事をピックアップ
       container = pickup_in
+
+      puts "Calculate Score .."
 
       # 既読記事は除外
       container.each_with_index do |items, index|
@@ -109,7 +112,7 @@ module QiitaMail
 
       @settings.keywords.each do |tag|
         # items << Qiita.tag_items(tag)
-        items << Qiita.search_items(tag, {})
+        items << Qiita.search_items(tag, {:per_page => PER_PAGE})
       end
 
       items
