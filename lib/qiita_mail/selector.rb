@@ -6,8 +6,8 @@
 # @date   2012/10/13
 
 require 'rubygems'
-require 'qiita'
 require 'qiita_mail/marshal_file'
+require 'qiita_mail/qiita_custom'
 
 module QiitaMail
   CACHE_FILE = File.join(File.dirname(__FILE__), '../../test/data/pickup_cache.marshal')
@@ -17,13 +17,13 @@ module QiitaMail
     # パラメータ
 
     TOP_BONUS = 30
-    PER_PAGE  = 50
+    PER_PAGE  = 40
 
+    # デバッグ用
+    USE_CACHE = false # デバッグ用のキャッシュからデータをロードする(高速)
+    
     # -----------------------
 
-    # @debug デバッグ用のキャッシュからデータをロードする(高速)
-    USE_CACHE = false
-    
     def initialize(settings, storage)
       @settings = settings
       @storage  = storage
@@ -107,6 +107,10 @@ module QiitaMail
     def pickup_items
       items = []
 
+      # 最新記事から取得
+      items << Qiita.items({:per_page => PER_PAGE})
+
+      # 登録したキーワードから取得
       @settings.keywords.each do |tag|
         # items << Qiita.tag_items(tag)
         items << Qiita.search_items(tag, {:per_page => PER_PAGE})
