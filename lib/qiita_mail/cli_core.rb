@@ -32,6 +32,7 @@ module QiitaMail
 
     def deliver
       # ピックアップ
+      puts "-- #{Time.now} --"
       puts "Pickup <---- Qiita.com"
       mail_body = pickup_and_format(:html)
       
@@ -43,6 +44,7 @@ module QiitaMail
 
     def file(format, filename = nil)
       # ピックアップ
+      puts "-- #{Time.now} --"
       puts "Pickup  <------ Qiita.com"
       mail_body = pickup_and_format(format)
       
