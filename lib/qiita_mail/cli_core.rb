@@ -38,7 +38,7 @@ module QiitaMail
       
       # メールの送信
       puts "Send mail -> #{@settings.email}"
-      mailer = Mailer.new(@settings.email, mail_body)
+      mailer = Mailer.new(@settings.email_from, @settings.email, mail_body)
       mailer.deliver
     end
 

@@ -39,6 +39,10 @@ module QiitaMail
       @data['email']
     end
 
+    def email_from
+      @data['email_from'] || @data['email']
+    end
+
     def keywords
       @data['keywords']
     end

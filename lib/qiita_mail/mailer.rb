@@ -10,8 +10,9 @@ require 'mail'
 
 module QiitaMail
   class Mailer
-    def initialize(to, body)
+    def initialize(from, to, body)
       @mail = Mail.new do
+        from    from
         to      to
         subject 'Qiita Mail'
         # body    mail_body
